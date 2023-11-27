@@ -1,0 +1,55 @@
+;; Call the cops
+
+(define (make-account balance password)
+  (define tries 0)
+  (define (withdraw amount)
+    (if (>= balance amount)
+        (begin (set! balance (- balance amount))
+          		balance)
+        "Insufficient Funds"))
+  (define (deposit amount)
+    (begin (set! balance (+ balance amount))
+      		balance))
+  (define (password? p)
+    (if (eq? p password)
+        (begin (set! tries 0)
+          		#t)
+        (begin (if (< tries 7)
+                   (set! tries (+ tries 1))
+                   (display "Calling the COPS!"))
+          		#f)))
+  (define (wrong-password n)
+    "Wrong Password")
+  (define (dispatch m p)
+    (if (password? p)
+        (cond ((eq? m 'withdraw) withdraw)
+              ((eq? m 'deposit) deposit)
+	          (else (error "Unknown Request -- MAKE ACCOUNT" m)))
+  		wrong-password))
+  dispatch)
+
+(define a (make-account 100 'kevin))
+(newline)
+
+(display ((a 'withdraw 'jinay) 10))
+(newline)
+
+(display ((a 'withdraw 'jinay) 10))
+(newline)
+
+(display ((a 'withdraw 'jinay) 20))
+(newline)
+
+(display ((a 'withdraw 'jinay) 50))
+(newline)
+
+(display ((a 'withdraw 'jinay) 20))
+(newline)
+
+(display ((a 'withdraw 'jinay) 10))
+(newline)
+(display ((a 'withdraw 'jinay) 10))
+(newline)
+
+(display ((a 'withdraw 'jinay) 10))
+(newline)
